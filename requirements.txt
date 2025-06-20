@@ -1,0 +1,13 @@
+filterpy
+Flask
+imutils
+matplotlib
+numba
+numpy
+opencv_python
+Requests
+scipy
+tqdm
+pydantic-settings
+pydantic
+joblib

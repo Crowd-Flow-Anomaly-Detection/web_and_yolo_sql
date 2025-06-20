@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人流資料</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <h1>{{ year }}年{{ month }}月 人流資料</h1>
+    <div class="buttons-container">
+        <div class="buttons">
+            <button onclick="changeMonth(-1)">上個月</button>
+            <button onclick="changeMonth(1)">下個月</button>
+        </div>
+    </div>
+    <div id="calendar">
+        <table border="1">
+            <tr>
+                <th>一</th>
+                <th>二</th>
+                <th>三</th>
+                <th>四</th>
+                <th>五</th>
+                <th>六</th>
+                <th>日</th>
+            </tr>
+            {% for week in cal %}
+                <tr>
+                    {% for day in week %}
+                        <td id="day{{ day }}" onclick="showFootfall('{{ year }}', '{{ month }}', '{{ day }}')">
+                            {% if day > 0 %}
+                                <strong>{{ day }}</strong><br>
+                                {% if day in data %}
+                                    <span class="footfall-count">人流量: {{ data[day] }}</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="footfall-details"></div>
+    <img id="footfallChart" src="" alt="Footfall Chart" style="display:none;">
+
+<!-- 上傳區塊 -->
+<input type="file" id="videoInput" accept="video/*">
+<button id="uploadBtn">上傳並播放</button>
+
+<!-- 影片播放器（預設隱藏） -->
+<video
+  id="videoPlayer"
+  controls
+  style="display:none; max-width:100%; margin-top:20px;"
+>
+  您的瀏覽器不支援 HTML5 影片播放。
+</video>
+
+</video>
+</body>
+</html>
