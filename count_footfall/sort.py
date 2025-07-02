@@ -125,7 +125,11 @@ def associate_detections_to_trackers(detections, trackers, iou_threshold=0.3):
             iou_matrix[d,t] = iou(det[:4], trk[:4])
 
     row_inds, col_inds = linear_assignment(-iou_matrix)
-    matched_indices = np.array(list(zip(row_inds, col_inds)))
+    matched_indices = (
+    np.array(list(zip(row_inds, col_inds))) if len(row_inds) > 0
+    else np.empty((0, 2), dtype=int)
+    )
+
 
     unmatched_detections = []
     for d, det in enumerate(detections):

@@ -19,7 +19,7 @@ def process_video(video_path, model_path='yolov8n.pt'):
 
     tracker = Sort()
     memory = {}
-    line = [(300, 500), (1000, 500)]
+    line = [(369, 312), (800, 364)]
     counter = 0
 
     COLORS = np.random.randint(0, 255, size=(200, 3), dtype="uint8")
@@ -126,6 +126,6 @@ def process_video(video_path, model_path='yolov8n.pt'):
     return counter, "output/result.mp4"
 
 if __name__ == "__main__":
-    video_path = "live_20250701_160423.mp4"
+    video_path = "input/record_2025-07-01_20-20-41.mp4"
     model_path = "yolo-coco/best.pt"  # 或 yolov12n.pt
     process_video(video_path, model_path)
