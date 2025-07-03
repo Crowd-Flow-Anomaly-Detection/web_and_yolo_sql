@@ -81,6 +81,8 @@
    pip install -r requirements.txt
    ```
 
+   如果要使用GPU 記得下載pytorch：
+
 2. **設定環境變數**
    建立 [`.env`](.env ) 檔案並填入以下資訊：
    ```
