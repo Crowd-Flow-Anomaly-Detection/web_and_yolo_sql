@@ -7,11 +7,12 @@ import glob
 import numpy as np
 from tqdm import tqdm
 from ultralytics import YOLO
-from sort import Sort  # 你的追蹤器程式
+# from sort import Sort  # 你的追蹤器程式
+from count_footfall.sort import Sort
 from datetime import datetime
 import requests
 
-def process_video(video_path, model_path='yolov8n.pt'):
+def process_video(video_path, model_path='count_footfall/yolo-coco/best.pt'):
     os.makedirs("output", exist_ok=True)
 
     for f in glob.glob('output/*.png'):
