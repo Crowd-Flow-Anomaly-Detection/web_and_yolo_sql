@@ -154,8 +154,12 @@ curl -X GET "http://127.0.0.1:5000/footfall_chart/2025/06/19.png" --output chart
 # 10. 上傳影片進行人流計數
 curl -X POST "http://127.0.0.1:5000/api/upload_video" -F "video=@/path/to/video.mp4"
 
-# 11. 下載處理後影片
+# 11. 下載處理前影片
 curl -X GET "http://127.0.0.1:5000/api/download_video/clients_video/your_video_20250619_123456.mp4"
+
+# 12. 下載處理後的結果影片
+curl -X GET "http://127.0.0.1:5000/api/download_processed_video/result.mp4"
+curl -X GET "http://127.0.0.1:5000/api/download_processed_video/result.mp4" --output result.mp4
 ```
 
 ## 預測模型操作

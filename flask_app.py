@@ -19,13 +19,20 @@ CORS(app)
 
 # 影片上傳資料夾
 VIDEO_UPLOAD_FOLDER = './clients_video'
+#處理完畢後影片的資料夾
+OUTPUT_VIDEO_FOLDER = './output'
+
 LAT, LON = 9.5120, 100.0136  # Ko Samui
 API_KEY = os.getenv("Weather_API_KEY")
 
-app.config['VIDEO_UPLOAD_FOLDER'] = VIDEO_UPLOAD_FOLDER
+app.config.update({
+    'VIDEO_UPLOAD_FOLDER': VIDEO_UPLOAD_FOLDER,
+    'OUTPUT_VIDEO_FOLDER': OUTPUT_VIDEO_FOLDER,
+})
 
 # 確保上傳資料夾存在
 os.makedirs(VIDEO_UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(OUTPUT_VIDEO_FOLDER, exist_ok=True)
 
 
 @app.before_request
@@ -161,6 +168,7 @@ def api_add_footfall():
         "hourly_weather": weather_main,
         "daily_weather": main_weather
     }), 201
+
 # 刪除特定日期與小時的人流量（完全移除那一筆）
 @app.route('/api/footfall/<date>/<hour>', methods=['DELETE'])
 def api_delete_footfall(date, hour):
@@ -465,7 +473,22 @@ def download_video(filename):
         as_attachment=False,
         conditional=True
     )
+
+#處理後的影片下載 filename 目前是result.mp4
+@app.route('/api/download_processed_video/<path:filename>')
+def download_processed_video(filename):
+    output_path = os.path.join(app.config['OUTPUT_VIDEO_FOLDER'], filename)
+    if not os.path.exists(output_path):
+        return jsonify({"error": "Processed video not found"}), 404
+
+    return send_file(
+        output_path,
+        mimetype='video/mp4',
+        as_attachment=True,
+        conditional=True
+    )
     
+
 
 if __name__ == '__main__':
     app.run(debug=True)
